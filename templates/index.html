@@ -76,7 +76,7 @@
                 $.ajax({
                     method: 'POST',
                     url: '/api/wishlist',
-                    data: {name: name}
+                    data: {name: name},
                     success: function(data, textStatus, jqXHR) {
                         updateWishlist();
                     }
