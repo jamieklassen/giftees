@@ -30,7 +30,7 @@ class Wishlist(djviews.View):
         POST (no id): creates new wishlist item for authenticated user
         """
         request.POST.update(wisher=request.user)
-        gift = models.Gift.objects.create(request.POST)
+        gift = models.Gift.objects.create(**request.POST)
         gift.save()
 
     def delete(self, request, **kwargs):
