@@ -34,8 +34,8 @@
                     '/api/wishlist',
                     function (data) {
                         var i;
+                        $("#wishlist").html("");
                         for (i = 0; i < data.length; ++i) {
-                            $("#wishlist").html("");
                             $("#wishlist").append(
                                     '<div class="alert alert-success" id="wishlist_' +
                                             data[i].pk +
