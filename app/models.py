@@ -18,7 +18,7 @@ admin.site.register(UserProfile)
 class Gift(models.Model):
     wisher = models.ForeignKey(User, related_name='wishing_for')
     buyer = models.ForeignKey(User, related_name='buying', blank=True, null=True)
-    bought = models.BooleanField()
+    bought = models.BooleanField(default=False)
     name = models.CharField(max_length=400)
 
     def __unicode__(self):
