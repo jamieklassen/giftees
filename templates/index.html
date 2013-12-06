@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css"
+          rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.js">
+    </script>
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js">
+    </script>
+    <script src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.getJSON(
+                '/api/wishlist',
+                function (data) {
+                    var i;
+                    for (i = 0; i < data.length; ++i) {
+                        $("#wishlist").append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +
+                            String(data[i].fields.name) +
+                            '</div>'
+                        );
+                    }
+                }
+            );
+            $.getJSON(
+                '/api/giftees',
+                function (data) {
+                    var i;
+                    for (i = 0; i < data.length; ++i) {
+                        $("#giftees").append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +
+                            String(data[i].pk) +
+                            ' | wishlist_link' +
+                            '</div>'
+                        );
+                    }
+                }
+            );
+            $.getJSON(
+                '/api/shopping',
+                function (data) {
+                    var i;
+                    for (i = 0; i < data.length; ++i) {
+                        $("#shopping").append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +
+                            String(data[i].fields.name) +
+                            ' | bought_switch' +
+                            '</div>'
+                        );
+                    }
+                }
+            );
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand">Giftee</a>
+            <ul class="nav pull-right">
+                <li>
+                    <a>
+                        Currently logged in as {{ user }}
+                    </a>
+                </li>
+                <li class="divider-vertical"></li>
+                <li>
+                    <a href="/logout?next=/">
+                        Log out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="well">
+                <h4>
+                    Wishlist
+                    <button class="pull-right">new_button</button>
+                </h4>
+                <div id="wishlist"></div>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <h4>
+                    Giftees <button class="pull-right">new_button</button>
+                </h4>
+                <div id="giftees"></div>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <h4>
+                    Shopping List
+                    <button class="pull-right">new_button</button>
+                </h4>
+                <div id="shopping"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
