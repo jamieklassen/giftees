@@ -26,9 +26,9 @@
                     var i;
                     for (i = 0; i < data.length; ++i) {
                         $("#wishlist").append(
-                            '<div class="alert alert-success" id="wishlist_"' +
+                            '<div class="alert alert-success" id="wishlist_' +
                             data[i].pk +
-                            '>' +
+                            '">' +
                             '<button type="button" class="close" onclick="wishlistRemove(' +
                             data[i].pk +
                             ')">' +
