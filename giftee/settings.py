@@ -9,6 +9,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
+SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
+
 LOGIN_URL = '/login'
 
 DEBUG = True
