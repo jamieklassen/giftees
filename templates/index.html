@@ -29,6 +29,28 @@
             }
             return cookieValue;
         }
+        function updateWishlist() {
+            $.getJSON(
+                    '/api/wishlist',
+                    function (data) {
+                        var i;
+                        for (i = 0; i < data.length; ++i) {
+                            $("#wishlist").html("");
+                            $("#wishlist").append(
+                                    '<div class="alert alert-success" id="wishlist_' +
+                                            data[i].pk +
+                                            '">' +
+                                            '<button type="button" class="close" onclick="wishlistRemove(' +
+                                            data[i].pk +
+                                            ')">' +
+                                            '&times;</button>' +
+                                            String(data[i].fields.name) +
+                                            '</div>'
+                            );
+                        }
+                    }
+            );
+        }
         var csrftoken = getCookie('csrftoken');
         function wishlistRemove(id) {
             $.ajax({
@@ -48,25 +70,18 @@
                     }
                 }
             });
-            $.getJSON(
-                '/api/wishlist',
-                function (data) {
-                    var i;
-                    for (i = 0; i < data.length; ++i) {
-                        $("#wishlist").append(
-                            '<div class="alert alert-success" id="wishlist_' +
-                            data[i].pk +
-                            '">' +
-                            '<button type="button" class="close" onclick="wishlistRemove(' +
-                            data[i].pk +
-                            ')">' +
-                            '&times;</button>' +
-                            String(data[i].fields.name) +
-                            '</div>'
-                        );
+            updateWishlist();
+            $("#wishlist_new").on('click', function() {
+                var name = prompt("Enter the name of the gift you want", "");
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/wishlist',
+                    data: {name: name}
+                    success: function(data, textStatus, jqXHR) {
+                        updateWishlist();
                     }
-                }
-            );
+                });
+            });
             $.getJSON(
                 '/api/giftees',
                 function (data) {
@@ -126,7 +141,7 @@
             <div class="well">
                 <h4>
                     Wishlist
-                    <button class="pull-right">new_button</button>
+                    <button class="pull-right" id="wishlist_new">new</button>
                 </h4>
                 <div id="wishlist"></div>
             </div>
