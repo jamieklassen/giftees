@@ -39,7 +39,7 @@ class Wishlist(djviews.View):
         """
         gift_id = kwargs.get('id')
         gift = models.Gift.objects.get(id=gift_id)
-        if gift.wisher is request.user:
+        if gift.wisher == request.user:
             gift.delete()
 
 
