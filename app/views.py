@@ -29,8 +29,7 @@ class Wishlist(djviews.View):
         """
         POST (no id): creates new wishlist item for authenticated user
         """
-        params = dict(request.POST)
-        params.update(wisher=request.user)
+        params = {'wisher': request.user, 'name': request.POST['name']}
         gift = models.Gift.objects.create(**params)
         gift.save()
 
