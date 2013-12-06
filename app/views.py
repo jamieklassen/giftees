@@ -25,7 +25,7 @@ class Wishlist(djviews.View):
                 qs = qs.filter(buyer=None)
         return json.loads(serializers.serialize('json', qs))
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         """
         POST (no id): creates new wishlist item for authenticated user
         """
