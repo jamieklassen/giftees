@@ -15,11 +15,7 @@ urlpatterns = patterns(
 
     url(r'^login/?$',
         'django.contrib.auth.views.login',
-        {
-            'template_name':
-            '/Library/Python/2.7/site-packages/django/contrib' +
-            '/admin/templates/admin/login.html',
-        }),
+        {'template_name': 'login.html'}),
 
     url(r'^logout/?$', 'django.contrib.auth.views.logout'),
 
