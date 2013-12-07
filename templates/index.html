@@ -103,7 +103,7 @@
                     );
                     for (i = 0; i < data.length; ++i) {
                         giftees_select.append(
-                            '<option value="' + data.pk + '">' +
+                            '<option value="' + data[i].pk + '">' +
                             data[i].fields.username +
                             '</option>'
                         );
@@ -137,16 +137,23 @@
                     method: 'POST',
                     url: '/api/wishlist',
                     data: {name: name},
-                    success: function(data, textStatus, jqXHR) {
+                    success: function (data, textStatus, jqXHR) {
                         updateWishlist();
                     }
                 });
             });
             updateUserList();
             updateGiftees();
-{#            $("#giftees_add").on('click', function() {#}
-{#                var giftee;#}
-{#            });#}
+            $("#giftees_add").on('click', function () {
+                var giftee = $("#giftees_select").val();
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/giftees/' + giftee,
+                    success: function (data, textStatus, jqXHR) {
+                        updateGiftees();
+                    }
+                })
+            });
             updateShoppingList();
         });
     </script>
@@ -184,8 +191,8 @@
             <div class="well">
                 <form class="form-inline">
                     <h4>Giftees</h4>
-                    <select id="giftees_select"></select>
-                    <button id="giftees_add">add</button>
+                    <select id="giftees_select" class="pull-right"></select>
+                    <button id="giftees_add" class="pull-right">add</button>
                 </form>
                 <div id="giftees"></div>
             </div>
