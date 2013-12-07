@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    buying_for = models.ManyToManyField(User, blank=True, null=True)
+    buying_for = models.ManyToManyField(User,
+                                        blank=True,
+                                        null=True,
+                                        related_name='gifter')
 
     def __unicode__(self):
         return unicode(self.user)
