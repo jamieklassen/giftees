@@ -32,23 +32,83 @@
         function updateWishlist() {
             $.getJSON(
                     '/api/wishlist',
-                    function (data) {
-                        var i;
-                        $("#wishlist").html("");
-                        for (i = 0; i < data.length; ++i) {
-                            $("#wishlist").append(
-                                    '<div class="alert alert-success" id="wishlist_' +
-                                            data[i].pk +
-                                            '">' +
-                                            '<button type="button" class="close" onclick="wishlistRemove(' +
-                                            data[i].pk +
-                                            ')">' +
-                                            '&times;</button>' +
-                                            String(data[i].fields.name) +
-                                            '</div>'
-                            );
-                        }
+                function (data) {
+                    var i, wishlist;
+                    wishlist = $("#wishlist");
+                    wishlist.html("");
+                    for (i = 0; i < data.length; ++i) {
+                        wishlist.append(
+                            '<div class="alert alert-success" id="wishlist_' +
+                            data[i].pk +
+                            '">' +
+                            '<button type="button" class="close" onclick="wishlistRemove(' +
+                            data[i].pk +
+                            ')">' +
+                            '&times;</button>' +
+                            String(data[i].fields.name) +
+                            '</div>'
+                        );
                     }
+                }
+            );
+        }
+        function updateGiftees() {
+            $.getJSON(
+                '/api/giftees',
+                function (data) {
+                    var i, giftees;
+                    giftees = $("#giftees");
+                    giftees.html("");
+                    for (i = 0; i < data.length; ++i) {
+                        giftees.append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +
+                            String(data[i].pk) +
+                            ' | wishlist_link' +
+                            '</div>'
+                        );
+                    }
+                }
+            );
+        }
+        function updateShoppingList() {
+            $.getJSON(
+                '/api/shopping',
+                function (data) {
+                    var i, shopping;
+                    shopping = $("#shopping");
+                    shopping.html("");
+                    for (i = 0; i < data.length; ++i) {
+                        shopping.append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +
+                            String(data[i].fields.name) +
+                            ' | bought_switch' +
+                            '</div>'
+                        );
+                    }
+                }
+            );
+        }
+        function updateUserList() {
+            $.getJSON(
+                '/api/users',
+                function (data) {
+                    var i, giftees_select;
+                    giftees_select = $("#giftees_select");
+                    giftees_select.html(
+                        '<option>-- select user to add as giftee --</option>'
+                    );
+                    for (i = 0; i < data.length; ++i) {
+                        giftees_select.append(
+                            '<option value="' + data.pk + '">' +
+                            data.fields.username +
+                            '</option>'
+                        );
+                    }
+                }
             );
         }
         var csrftoken = getCookie('csrftoken');
@@ -82,38 +142,12 @@
                     }
                 });
             });
-            $.getJSON(
-                '/api/giftees',
-                function (data) {
-                    var i;
-                    for (i = 0; i < data.length; ++i) {
-                        $("#giftees").append(
-                            '<div class="alert alert-success">' +
-                            '<button type="button" class="close" data-dismiss="alert">' +
-                            '&times;</button>' +
-                            String(data[i].pk) +
-                            ' | wishlist_link' +
-                            '</div>'
-                        );
-                    }
-                }
-            );
-            $.getJSON(
-                '/api/shopping',
-                function (data) {
-                    var i;
-                    for (i = 0; i < data.length; ++i) {
-                        $("#shopping").append(
-                            '<div class="alert alert-success">' +
-                            '<button type="button" class="close" data-dismiss="alert">' +
-                            '&times;</button>' +
-                            String(data[i].fields.name) +
-                            ' | bought_switch' +
-                            '</div>'
-                        );
-                    }
-                }
-            );
+            updateUserList();
+            updateGiftees();
+{#            $("#giftees_add").on('click', function() {#}
+{#                var giftee;#}
+{#            });#}
+            updateShoppingList();
         });
     </script>
 </head>
@@ -150,10 +184,8 @@
             <div class="well">
                 <form class="form-inline">
                     <h4>Giftees</h4>
-                    <select>
-                        <option>-- select user to add as giftee --</option>
-                    </select>
-                    <button type="submit">add</button>
+                    <select id="giftees_select"></select>
+                    <button id="giftees_add">add</button>
                 </form>
                 <div id="giftees"></div>
             </div>
