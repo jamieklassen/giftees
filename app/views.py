@@ -57,7 +57,7 @@ class Giftees(djviews.View):
             user = models.UserProfile.objects.get(user=request.user)
             qs = user.buying_for.all()
         else:
-            qs = models.UserProfile.objects.filter(id=profile_id)
+            qs = djmodels.User.objects.filter(id=profile_id)
         return json.loads(serializers.serialize('json', qs))
 
     def post(self, request, **kwargs):
