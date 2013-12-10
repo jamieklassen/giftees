@@ -148,6 +148,7 @@
                 var giftee = $("#giftees_select").val();
                 $.ajax({
                     method: 'POST',
+                    async: true,
                     url: '/api/giftees/' + giftee,
                     success: function (data, textStatus, jqXHR) {
                         updateGiftees();
