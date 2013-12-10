@@ -53,13 +53,13 @@
             );
         }
         function gifteeWishlist(id) {
-            var ret = {ret: ''};
+            var giftee = $("#giftee_" + id + " > select");
             $.getJSON(
                 '/api/wishlist/' + id,
                 function (data) {
                     var j;
                     for (j = 0; j < data.length; ++j) {
-                        ret.ret += ret.ret.concat(
+                        giftee.append(
                             '<option value="' +
                             data[j].pk + '">' +
                             data[j].fields.name +
@@ -68,7 +68,6 @@
                     }
                 }
             );
-            return ret.ret;
         }
         function updateGiftees() {
             $.getJSON(
@@ -79,17 +78,18 @@
                     giftees.html("");
                     for (i = 0; i < data.length; ++i) {
                         giftees.append(
-                            '<div class="alert alert-success">' +
+                            '<div class="alert alert-success" id="giftee_' +
+                            data[i].pk +
+                            '">' +
                             '<button type="button" class="close" onclick="gifteeRemove(' +
                             data[i].pk +
                             ')">' +
                             '&times;</button>' +
                             data[i].fields.username +
-                            '<select>' +
-                            gifteeWishlist(data[i].pk) +
-                            '</select>' +
+                            '<select></select>' +
                             '</div>'
                         );
+                        gifteeWishlist(data[i].pk);
                     }
                 }
             );
