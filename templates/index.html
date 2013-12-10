@@ -52,6 +52,22 @@
                 }
             );
         }
+        function gifteeWishlist(id) {
+            var ret = '';
+            $.getJSON(
+                '/api/wishlist/' + id,
+                function (data) {
+                    var j;
+                    for (j = 0; j < data.length; ++j)
+                        ret = ret.concat(
+                            '<option value="' + wishlist[i].pk + '">' +
+                            data[i].fields.name +
+                            '</option>'
+                        )
+                }
+            );
+            return ret;
+        }
         function updateGiftees() {
             $.getJSON(
                 '/api/giftees',
@@ -60,12 +76,6 @@
                     giftees = $("#giftees");
                     giftees.html("");
                     for (i = 0; i < data.length; ++i) {
-                        $.getJSON(
-                            '/api/wishlist/' + data[i].pk,
-                            function (data) {
-                                wishlist = data.slice();
-                            }
-                        );
                         giftees.append(
                             '<div class="alert alert-success">' +
                             '<button type="button" class="close" onclick="gifteeRemove(' +
@@ -73,16 +83,8 @@
                             ')">' +
                             '&times;</button>' +
                             data[i].fields.username +
-                            '<select>'
-                        );
-                        for (j = 0; j < wishlist.length; ++j) {
-                            giftees.append(
-                                '<option value="' + wishlist[i].pk + '">' +
-                                wishlist[i].fields.name +
-                                '</option>'
-                            );
-                        }
-                        giftees.append(
+                            '<select>' +
+                            gifteeWishlist(data[i].pk) +
                             '</select>' +
                             '</div>'
                         );
