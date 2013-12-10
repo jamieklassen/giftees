@@ -56,10 +56,16 @@
             $.getJSON(
                 '/api/giftees',
                 function (data) {
-                    var i, giftees;
+                    var i, j, wishlist, giftees;
                     giftees = $("#giftees");
                     giftees.html("");
                     for (i = 0; i < data.length; ++i) {
+                        $.getJSON(
+                            '/api/wishlist/' + data[i].pk,
+                            function (data) {
+                                wishlist = data;
+                            }
+                        );
                         giftees.append(
                             '<div class="alert alert-success">' +
                             '<button type="button" class="close" onclick="gifteeRemove(' +
@@ -67,7 +73,17 @@
                             ')">' +
                             '&times;</button>' +
                             data[i].fields.username +
-                            ' | wishlist_link' +
+                            '<select>' +
+                        );
+                        for (j = 0; j < wishlist.length; ++j) {
+                            giftees.append(
+                                '<option value="' + wishlist[i].pk + '">' +
+                                wishlist[i].fields.name +
+                                '</option>'
+                            );
+                        }
+                        giftees.append(
+                            '</select>' +
                             '</div>'
                         );
                     }
