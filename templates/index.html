@@ -64,7 +64,7 @@
                             '<div class="alert alert-success">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +
-                            String(data[i].pk) +
+                            data[i].fields.username +
                             ' | wishlist_link' +
                             '</div>'
                         );
@@ -192,7 +192,7 @@
             <div class="well">
                 <h4>Giftees</h4>
                 <select id="giftees_select"></select>
-                <button id="giftees_add">add</button>
+                <button class="pull-right" id="giftees_add">add</button>
                 <div id="giftees"></div>
             </div>
         </div>
