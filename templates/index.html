@@ -119,10 +119,11 @@
                     for (i = 0; i < data.length; ++i) {
                         shopping.append(
                             '<div class="alert alert-success">' +
-                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '<button type="button" class="close" onclick="removeGift(' +
+                            data[i].pk +
+                            ')">' +
                             '&times;</button>' +
                             String(data[i].fields.name) +
-                            ' | bought_switch' +
                             '</div>'
                         );
                     }
@@ -157,6 +158,16 @@
                     updateWishlist();
                 }
             });
+        }
+        function removeGift(id) {
+            $.ajax({
+                method: 'DELETE',
+                url: '/api/shopping/' + id,
+                success: function (data, textStatus, jqXHR) {
+                    updateShoppingList();
+                    updateGiftees();
+                }
+            })
         }
         function gifteeRemove(id) {
             $.ajax({
@@ -244,10 +255,7 @@
         </div>
         <div class="span4">
             <div class="well">
-                <h4>
-                    Shopping List
-                    <button class="pull-right">new_button</button>
-                </h4>
+                <h4>Shopping List</h4>
                 <div id="shopping"></div>
             </div>
         </div>
