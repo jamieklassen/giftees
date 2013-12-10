@@ -16,10 +16,9 @@ class Wishlist(djviews.View):
         """
         profile_id = kwargs.get('id')
         if profile_id is None:
-            user = models.UserProfile.objects.get(user=request.user)
-            qs = models.Gift.objects.filter(wisher=user)
+            qs = models.Gift.objects.filter(wisher=request.user)
         else:
-            user = models.UserProfile.objects.get(id=profile_id)
+            user = djmodels.User.objects.get(id=profile_id)
             qs = models.Gift.objects.filter(wisher=user)
             if user.user != request.user:
                 qs = qs.filter(buyer=None)
@@ -67,7 +66,7 @@ class Giftees(djviews.View):
         """
         profile_id = kwargs.get('id')
         this = models.UserProfile.objects.get(user=request.user)
-        this.buying_for.add(models.UserProfile.get(id=profile_id))
+        this.buying_for.add(djmodels.User.get(id=profile_id))
         this.save()
 
     def delete(self, request, **kwargs):
@@ -92,9 +91,7 @@ class Shopping(djviews.View):
         """
         gift_id = kwargs.get('id')
         if gift_id is None:
-            qs = models.Gift.objects.filter(
-                buyer=models.UserProfile.objects.get(user=request.user)
-            )
+            qs = models.Gift.objects.filter(buyer=request.user)
         else:
             qs = models.Gift.objects.get(id=gift_id)
         return json.loads(serializers.serialize('json', qs))
@@ -118,7 +115,7 @@ class Shopping(djviews.View):
         """
         gift_id = kwargs.get('id')
         gift = models.Gift.objects.get(id=gift_id)
-        gift.buyer = models.UserProfile.objects.get(user=request.user)
+        gift.buyer = request.user
         gift.save()
 
     def delete(self, request, **kwargs):
