@@ -53,18 +53,18 @@
             );
         }
         function gifteeWishlist(id) {
-            var ret = '';
+            var ret = {ret: ''};
             $.getJSON(
                 '/api/wishlist/' + id,
                 function (data) {
                     var j;
                     for (j = 0; j < data.length; ++j)
-                        ret += ('<option value="' + data[j].pk + '">' +
+                        ret.ret += ('<option value="' + data[j].pk + '">' +
                             data[j].fields.name +
                             '</option>');
                 }
             );
-            return ret;
+            return ret.ret;
         }
         function updateGiftees() {
             $.getJSON(
