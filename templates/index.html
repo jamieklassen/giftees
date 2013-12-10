@@ -63,7 +63,7 @@
                         $.getJSON(
                             '/api/wishlist/' + data[i].pk,
                             function (data) {
-                                wishlist = data;
+                                wishlist = data.slice();
                             }
                         );
                         giftees.append(
