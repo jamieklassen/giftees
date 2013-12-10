@@ -31,7 +31,7 @@
         }
         function updateWishlist() {
             $.getJSON(
-                    '/api/wishlist',
+                '/api/wishlist',
                 function (data) {
                     var i, wishlist;
                     wishlist = $("#wishlist");
@@ -73,7 +73,7 @@
                             ')">' +
                             '&times;</button>' +
                             data[i].fields.username +
-                            '<select>' +
+                            '<select>'
                         );
                         for (j = 0; j < wishlist.length; ++j) {
                             giftees.append(
