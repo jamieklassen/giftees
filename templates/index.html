@@ -58,10 +58,14 @@
                 '/api/wishlist/' + id,
                 function (data) {
                     var j;
-                    for (j = 0; j < data.length; ++j)
-                        ret.ret += ('<option value="' + data[j].pk + '">' +
+                    for (j = 0; j < data.length; ++j) {
+                        ret.ret += ret.ret.concat(
+                            '<option value="' +
+                            data[j].pk + '">' +
                             data[j].fields.name +
-                            '</option>');
+                            '</option>'
+                        );
+                    }
                 }
             );
             return ret.ret;
