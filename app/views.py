@@ -20,7 +20,7 @@ class Wishlist(djviews.View):
         else:
             user = djmodels.User.objects.get(id=profile_id)
             qs = models.Gift.objects.filter(wisher=user)
-            if user.user != request.user:
+            if user != request.user:
                 qs = qs.filter(buyer=None)
         return json.loads(serializers.serialize('json', qs))
 
