@@ -59,11 +59,9 @@
                 function (data) {
                     var j;
                     for (j = 0; j < data.length; ++j)
-                        ret = ret.concat(
-                            '<option value="' + data[j].pk + '">' +
+                        ret += ('<option value="' + data[j].pk + '">' +
                             data[j].fields.name +
-                            '</option>'
-                        );
+                            '</option>');
                 }
             );
             return ret;
