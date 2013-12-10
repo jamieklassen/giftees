@@ -58,6 +58,7 @@
                 '/api/wishlist/' + id,
                 function (data) {
                     var j;
+                    giftee.append('<option>-- select a gift --</option>');
                     for (j = 0; j < data.length; ++j) {
                         giftee.append(
                             '<option value="' +
@@ -68,6 +69,17 @@
                     }
                 }
             );
+        }
+        function buyGift(id) {
+            var gift = $("#giftee_" + id + " select").val();
+            $.ajax({
+                method: 'POST',
+                url: '/api/shopping/' + gift,
+                success: function (data) {
+                    updateShoppingList();
+                    updateGiftees();
+                }
+            })
         }
         function updateGiftees() {
             $.getJSON(
@@ -86,7 +98,10 @@
                             ')">' +
                             '&times;</button>' +
                             data[i].fields.username +
-                            '<select></select>' +
+                            '<select class="pull-right"></select>' +
+                            '<button onclick="buyGift(' +
+                            data[i].pk +
+                            ')">buy</button>' +
                             '</div>'
                         );
                         gifteeWishlist(data[i].pk);
