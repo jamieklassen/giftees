@@ -76,7 +76,7 @@ class Giftees(djviews.View):
         """
         profile_id = kwargs.get('id')
         this = models.UserProfile.objects.get(user=request.user)
-        this.buying_for.remove(models.UserProfile.get(id=profile_id))
+        this.buying_for.remove(djmodels.User.objects.get(id=profile_id))
         this.save()
 
 
